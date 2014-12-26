@@ -6,6 +6,9 @@
     <groupId>com.workhabit</groupId>
     <artifactId>mongo-base</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <build>
         <plugins>
@@ -16,6 +19,15 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -72,4 +84,26 @@
             <version>1.8.0</version>
         </dependency>
     </dependencies>
+    <developers>
+        <developer>
+            <email>aaron@workhabit.com</email>
+            <name>Aaron Stewart</name>
+            <organization>WorkHabit, Inc.</organization>
+            <organizationUrl>http://www.workhabit.com</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:https://github.com/pixelcat/mongo-base.git</connection>
+        <developerConnection>scm:git:https://github.com/pixelcat/mongo-base.git</developerConnection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <url>http://nexus.workhabit.com/nexus/content/repositories/releases</url>
+            <id>nexus.workhabit.com</id>
+        </repository>
+        <snapshotRepository>
+            <url>http://nexus.workhabit.com/nexus/content/repositories/snapshots</url>
+            <id>nexus.workhabit.com</id>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
