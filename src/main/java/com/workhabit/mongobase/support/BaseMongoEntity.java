@@ -1,6 +1,7 @@
 package com.workhabit.mongobase.support;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.bson.types.ObjectId;
 import org.joda.time.DateTime;
@@ -17,14 +18,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class BaseMongoEntity implements MongoEntity, Timestampable
 {
     @Id
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private ObjectId id;
 
     @CreatedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DateTime created;
 
     @LastModifiedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DateTime updated;
 
     public ObjectId getId()

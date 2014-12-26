@@ -17,6 +17,8 @@ import java.util.List;
 /**
  * Copyright 2014 - Aaron Stewart
  * Date: 10/15/14, 12:39 AM
+ *
+ * Adds support for OrderBy annotation
  */
 public class SortingMongoEventListener extends AbstractMongoEventListener
 {
@@ -59,11 +61,13 @@ public class SortingMongoEventListener extends AbstractMongoEventListener
             }
         }
 
+        @SuppressWarnings("unchecked")
         private void sort(Object fieldValue, OrderBy orderBy) {
             if (ClassUtils.isAssignable(List.class, fieldValue.getClass())) {
                 final List list = (List) fieldValue;
 
                 if (orderBy.sort() == Sort.Direction.ASC) {
+
                     Collections.sort(list, new BeanComparator(orderBy.value()));
                 } else {
                     Collections.sort(list, new BeanComparator(orderBy.value(), Collections.reverseOrder()));

@@ -1,5 +1,6 @@
 package com.workhabit.mongobase.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.workhabit.mongobase.support.JodaDateTimeJsonSerializer;
 import com.workhabit.mongobase.support.MongoEntity;
 import com.workhabit.mongobase.support.Timestampable;
@@ -29,12 +30,14 @@ public class BaseUser implements MongoEntity, Timestampable
     @CreatedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DateTime created;
 
 
     @LastModifiedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private DateTime updated;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
