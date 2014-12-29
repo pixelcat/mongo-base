@@ -29,7 +29,8 @@ public class MongoUtils
     @Autowired
     private MongoOperations mongoOperations;
 
-    @Autowired ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public AggregationResults<DBObject> getEntityCountByField(String fieldName, Class entityType)
     {
@@ -45,9 +46,7 @@ public class MongoUtils
 
     public MongoEntity saveOrUpdate(MongoEntity entity) throws JsonProcessingException
     {
-        Query query = Query.query(Criteria.where("id").is(entity.getId()));
-        DBObject dbObject = (DBObject)JSON.parse(objectMapper.writeValueAsString(entity));
-        Update update = Update.fromDBObject(dbObject);
-        return mongoOperations.findAndModify(query, update, entity.getClass());
+        mongoOperations.save(entity, mongoOperations.getCollectionName(entity.getClass()));
+        return entity;
     }
 }

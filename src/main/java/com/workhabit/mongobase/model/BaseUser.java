@@ -42,7 +42,8 @@ public class BaseUser implements MongoEntity, Timestampable
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
-    private boolean loggedIn;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private DateTime lastLogIn;
 
     public ObjectId getId()
     {
@@ -104,13 +105,13 @@ public class BaseUser implements MongoEntity, Timestampable
         this.updated = updated;
     }
 
-    public boolean isLoggedIn()
+    public DateTime lastLogIn()
     {
-        return loggedIn;
+        return lastLogIn;
     }
 
-    public void setLoggedIn(boolean loggedIn)
+    public void setLoggedIn(DateTime lastLogIn)
     {
-        this.loggedIn = loggedIn;
+        this.lastLogIn = lastLogIn;
     }
 }
