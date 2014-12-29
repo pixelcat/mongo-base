@@ -4,7 +4,7 @@
 
     <groupId>com.workhabit</groupId>
     <artifactId>mongo-base</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
