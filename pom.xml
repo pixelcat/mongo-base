@@ -105,12 +105,12 @@
   </scm>
     <distributionManagement>
         <repository>
-            <url>scpexe://nexus.dployr.com/opt/sonatype-work/nexus/storage/releases</url>
-            <id>nexus.workhabit.com</id>
+            <url>scp://nexus.dployr.com/opt/sonatype-work/nexus/storage/releases</url>
+            <id>nexus.dployr.com-releases</id>
         </repository>
         <snapshotRepository>
-            <url>scpexe://nexus.dployr.com/opt/sonatype-work/nexus/storage/snapshots</url>
-            <id>nexus.workhabit.com</id>
+            <url>scp://nexus.dployr.com/opt/sonatype-work/nexus/storage/snapshots</url>
+            <id>nexus.dployr.com-snapshots</id>
         </snapshotRepository>
     </distributionManagement>
 </project>
