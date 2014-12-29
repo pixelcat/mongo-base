@@ -100,11 +100,11 @@
     <distributionManagement>
         <repository>
             <url>http://nexus.dployr.com/nexus/content/repositories/releases</url>
-            <id>nexus.workhabit.com</id>
+            <id>nexus.workhabit.com-releases</id>
         </repository>
         <snapshotRepository>
             <url>http://nexus.dployr.com/nexus/content/repositories/snapshots</url>
-            <id>nexus.workhabit.com</id>
+            <id>nexus.workhabit.com-snapshots</id>
         </snapshotRepository>
     </distributionManagement>
 </project>
