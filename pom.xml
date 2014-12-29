@@ -4,7 +4,7 @@
 
     <groupId>com.workhabit</groupId>
     <artifactId>mongo-base</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -30,6 +30,13 @@
                 </configuration>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh-external</artifactId>
+                <version>2.8</version>
+            </extension>
+        </extensions>
     </build>
     <dependencies>
         <dependency>
@@ -98,11 +105,11 @@
   </scm>
     <distributionManagement>
         <repository>
-            <url>scp://nexus.dployr.com/opt/sonatype-work/nexus/storage/releases</url>
+            <url>scpexe://nexus.dployr.com/opt/sonatype-work/nexus/storage/releases</url>
             <id>nexus.workhabit.com</id>
         </repository>
         <snapshotRepository>
-            <url>scp://nexus.dployr.com/opt/sonatype-work/nexus/storage/snapshots</url>
+            <url>scpexe://nexus.dployr.com/opt/sonatype-work/nexus/storage/snapshots</url>
             <id>nexus.workhabit.com</id>
         </snapshotRepository>
     </distributionManagement>
