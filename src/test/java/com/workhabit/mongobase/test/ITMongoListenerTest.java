@@ -7,6 +7,7 @@ import org.bson.BSON;
 import org.bson.types.ObjectId;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,19 +46,19 @@ public class ITMongoListenerTest
         private String databaseName;
 
         @Bean
-        private CascadingMongoEventListener cascadingMongoEventListener()
+        protected CascadingMongoEventListener cascadingMongoEventListener()
         {
             return new CascadingMongoEventListener();
         }
 
         @Bean
-        private MongoOperations mongoOperations() throws Exception
+        protected MongoOperations mongoOperations() throws Exception
         {
             return new MongoTemplate(mongo().getObject(), databaseName());
         }
 
         @Bean
-        private MongoFactoryBean mongo()
+        protected MongoFactoryBean mongo()
         {
             BSON.addEncodingHook(DateTime.class, new JodaDateTimeTransformer());
             BSON.addDecodingHook(Date.class, new JodaDateTimeTransformer());
@@ -68,19 +69,20 @@ public class ITMongoListenerTest
         }
 
         @Bean
-        public String databaseHostName()
+        protected String databaseHostName()
         {
             return "127.0.0.1";
         }
 
         @Bean
-        public int databasePort()
+        protected int databasePort()
         {
-            return Integer.parseInt(System.getProperty("embedmongo.port"));
+
+            return 37017;
         }
 
         @Bean
-        public String databaseName()
+        protected String databaseName()
         {
             if (databaseName == null) {
                 DataFactory df = new DataFactory();
@@ -92,12 +94,6 @@ public class ITMongoListenerTest
 
     @Autowired
     private MongoOperations mongoOperations;
-
-    @Before
-    private void setUp()
-    {
-
-    }
 
     @Test
     public void testMongoCascadingEventListener()
@@ -114,11 +110,20 @@ public class ITMongoListenerTest
 
         List<MongoListenerChildEntity> all = mongoOperations.findAll(MongoListenerChildEntity.class);
         assertEquals(all.size(), 1);
+        MongoListenerChildEntity childEntity = all.get(0);
+        Assert.assertEquals(child.getName(), childEntity.getName());
     }
 
+
+    public void testMongoSortingEventListener() {
+        MongoListenerTestEntity entity1 = new MongoListenerTestEntity();
+
+    }
     @Document class MongoListenerTestEntity
     {
+        @Id
         private ObjectId id;
+        @Field
         private String name;
 
         @DBRef

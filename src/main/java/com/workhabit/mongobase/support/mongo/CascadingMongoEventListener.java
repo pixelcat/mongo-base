@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventLis
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Copyright 2014 - Aaron Stewart
@@ -25,32 +27,36 @@ public class CascadingMongoEventListener extends AbstractMongoEventListener
 
     @Override
     public void onBeforeConvert(final Object source) {
-        ReflectionUtils.doWithFields(source.getClass(), new ReflectionUtils.FieldCallback() {
+        ReflectionUtils.doWithFields(source.getClass(), field -> {
+            ReflectionUtils.makeAccessible(field);
 
-            public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
-                ReflectionUtils.makeAccessible(field);
+            if (field.isAnnotationPresent(DBRef.class) && field.isAnnotationPresent(CascadeSave.class)) {
+                final Object fieldValue = field.get(source);
 
-                if (field.isAnnotationPresent(DBRef.class) && field.isAnnotationPresent(CascadeSave.class)) {
-                    final Object fieldValue = field.get(source);
+                if (fieldValue != null) {
+                    Class<?> typeClass = field.getType();
+                    if (Collection.class.isAssignableFrom(field.getType())) {
+                        // element of a collection, find type and inspect that instead
+                        ParameterizedType type = (ParameterizedType)field.getGenericType();
+                        typeClass = (Class<?>)type.getActualTypeArguments()[0];
+                    }
 
-                    if (fieldValue != null) {
-                        DbRefFieldCallback callback = new DbRefFieldCallback();
+                    DbRefFieldCallback callback = new DbRefFieldCallback();
 
-                        ReflectionUtils.doWithFields(fieldValue.getClass(), callback);
+                    ReflectionUtils.doWithFields(typeClass, callback);
 
-                        if (!callback.isIdFound()) {
-                          throw new MappingException("Cannot perform cascade save on child object without id set");
+                    if (!callback.isIdFound()) {
+                      throw new MappingException("Cannot perform cascade save on child object without id set");
+                    }
+                    if (Collection.class.isAssignableFrom(field.getType())) {
+                        @SuppressWarnings("unchecked")
+                        Collection<Object> models = (Collection<Object>) fieldValue;
+                        for (Object model : models) {
+                            mongoOperations.save(model);
                         }
-                        if (Collection.class.isAssignableFrom(field.getType())) {
-                            @SuppressWarnings("unchecked")
-                            Collection<Object> models = (Collection<Object>) fieldValue;
-                            for (Object model : models) {
-                                mongoOperations.save(model);
-                            }
-                        }
-                        else {
-                            mongoOperations.save(fieldValue);
-                        }
+                    }
+                    else {
+                        mongoOperations.save(fieldValue);
                     }
                 }
             }
