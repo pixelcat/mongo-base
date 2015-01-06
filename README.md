@@ -33,3 +33,32 @@ And in your entity bean:
     private List<TargetEntity> entities;
 ```
 
+## SortingMongoEventListener
+
+Provides the ability to sort DBRef collections as a child of an entity when returned from Mongo.
+
+To use:
+
+JavaConfig:
+
+```
+    /** create this as a bean in your spring context **/
+    @Bean
+    public SortingMongoEventListener sortingMongoEventListener() {
+        return new SortingMongoEventListener();
+    }
+```
+
+XML Context:
+
+```
+    <bean id="sortingMongoEventListener"
+         class="com.workhabit.support.mongo.SortingMongoEventListener"/>
+```
+
+And in your entity bean:
+
+```
+    @DBRef
+    @OrderBy(sort = Sort.Direction.ASC, SortPhase.AFTER_CONVERT)
+```
