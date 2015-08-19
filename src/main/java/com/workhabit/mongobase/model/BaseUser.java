@@ -1,5 +1,6 @@
 package com.workhabit.mongobase.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.workhabit.mongobase.support.JodaDateTimeJsonSerializer;
 import com.workhabit.mongobase.support.MongoEntity;
@@ -31,6 +32,7 @@ public class BaseUser implements MongoEntity, Timestampable
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
     private DateTime created;
 
 
@@ -38,11 +40,13 @@ public class BaseUser implements MongoEntity, Timestampable
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
     private DateTime updated;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonSerialize(using = JodaDateTimeJsonSerializer.class)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
     private DateTime lastLogIn;
 
     public ObjectId getId()
