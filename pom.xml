@@ -269,11 +269,11 @@
     </scm>
     <distributionManagement>
         <repository>
-            <url>http://nexus.dployr.com/nexus/content/repositories/releases</url>
+            <url>http://nexus.dployr.com/content/repositories/releases</url>
             <id>nexus.dployr.com-releases</id>
         </repository>
         <snapshotRepository>
-            <url>http://nexus.dployr.com/nexus/content/repositories/snapshots</url>
+            <url>http://nexus.dployr.com/content/repositories/snapshots</url>
             <id>nexus.dployr.com-snapshots</id>
         </snapshotRepository>
     </distributionManagement>
@@ -297,7 +297,7 @@
                         </executions>
                         <configuration>
                             <serverId>nexus-releases</serverId>
-                            <nexusUrl>http://nexus.dployr.com/nexus/</nexusUrl>
+                            <nexusUrl>http://nexus.dployr.com/</nexusUrl>
                             <skipStaging>true</skipStaging>
                         </configuration>
                     </plugin>
