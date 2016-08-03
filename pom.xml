@@ -269,11 +269,11 @@
     </scm>
     <distributionManagement>
         <repository>
-            <url>http://nexus.dployr.com/content/repositories/releases</url>
+            <url>http://nexus.dployr.com/repository/maven-releases/</url>
             <id>nexus.dployr.com-releases</id>
         </repository>
         <snapshotRepository>
-            <url>http://nexus.dployr.com/content/repositories/snapshots</url>
+            <url>http://nexus.dployr.com/repository/maven-snapshots/</url>
             <id>nexus.dployr.com-snapshots</id>
         </snapshotRepository>
     </distributionManagement>
