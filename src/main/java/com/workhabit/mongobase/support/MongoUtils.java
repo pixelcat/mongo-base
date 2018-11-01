@@ -32,16 +32,16 @@ public class MongoUtils
     @Autowired
     private ObjectMapper objectMapper;
 
-    public AggregationResults<DBObject> getEntityCountByField(String fieldName, Class entityType)
+    public <T> AggregationResults<T> getEntityCountByField(String fieldName, Class<T> entityType)
     {
         Aggregation aggregations = Aggregation.newAggregation(group(fieldName).count().as("fieldCount"), project("_id", "fieldCount"));
-        return mongoOperations.aggregate(aggregations, mongoOperations.getCollectionName(entityType), DBObject.class);
+        return mongoOperations.aggregate(aggregations, mongoOperations.getCollectionName(entityType), entityType);
     }
 
-    public AggregationResults<DBObject> getEntityCountByField(String fieldName, DateTime fromDate, DateTime toDate, Class entityType)
+    public <T> AggregationResults<T> getEntityCountByField(String fieldName, DateTime fromDate, DateTime toDate, Class<T> entityType)
     {
         Aggregation aggregations = Aggregation.newAggregation(group(fieldName).count().as("fieldCount"), Aggregation.match(where("createdDate").gte(fromDate).lte(toDate)), project("_id", "fieldCount"));
-        return mongoOperations.aggregate(aggregations, mongoOperations.getCollectionName(entityType), DBObject.class);
+        return mongoOperations.aggregate(aggregations, mongoOperations.getCollectionName(entityType), entityType);
     }
 
     public MongoEntity saveOrUpdate(MongoEntity entity) throws JsonProcessingException

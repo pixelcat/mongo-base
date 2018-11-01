@@ -2,10 +2,10 @@ package com.workhabit.mongobase.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.workhabit.mongobase.support.MongoEntity;
 import com.workhabit.mongobase.support.MongoUtils;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertNotNull;
@@ -26,15 +27,13 @@ import static org.junit.Assert.assertNotNull;
  * Copyright 2014 - Aaron Stewart
  * Date: 12/28/14, 9:23 PM
  */
-public class MongoUtilsTest
-{
+public class MongoUtilsTest {
     MongoUtils mongoUtils;
     MongoOperations mongoOperations;
     Mockery mockery;
 
     @Before
-    public void setUp() throws NoSuchFieldException, IllegalAccessException
-    {
+    public void setUp() throws NoSuchFieldException, IllegalAccessException {
         mockery = new Mockery();
         mongoUtils = new MongoUtils();
         Field field = mongoUtils.getClass().getDeclaredField("mongoOperations");
@@ -48,60 +47,46 @@ public class MongoUtilsTest
     }
 
     @Test
-    public void testGetEntityCountByFieldNoDate()
-    {
+    public void testGetEntityCountByFieldNoDate() {
         assertNotNull(mongoUtils);
 
-        mockery.checking(new Expectations()
-        {
-            {
-                one(mongoOperations).getCollectionName(TestClass.class);
-                will(returnValue("testCollection"));
-
-                java.util.List<DBObject> results = new ArrayList<>();
-                DBObject rawResults = new BasicDBObject();
-                one(mongoOperations).aggregate(with(isA(Aggregation.class)), with(equal("testCollection")), with(equal(DBObject.class)));
-
-                will(
-                        returnValue(new AggregationResults<>(results, rawResults)));
-            }
-        });
-        AggregationResults<DBObject> foo = mongoUtils.getEntityCountByField("foo", TestClass.class);
+        setupExpectations();
+        AggregationResults<TestClass> foo = mongoUtils.getEntityCountByField("foo", TestClass.class);
         assertNotNull(foo);
 
         mockery.assertIsSatisfied();
 
     }
 
-    @Test
-    public void testGetEntityCountByFieldWithDate()
-    {
-        assertNotNull(mongoUtils);
-
-        mockery.checking(new Expectations()
-        {
+    private void setupExpectations() {
+        mockery.checking(new Expectations() {
             {
-                one(mongoOperations).getCollectionName(TestClass.class);
+                exactly(1).of(mongoOperations).getCollectionName(TestClass.class);
                 will(returnValue("testCollection"));
 
-                java.util.List<DBObject> results = new ArrayList<>();
-                DBObject rawResults = new BasicDBObject();
-                one(mongoOperations).aggregate(with(isA(Aggregation.class)), with(equal("testCollection")), with(equal(DBObject.class)));
+                java.util.List<Document> results = new ArrayList<>();
+                Document rawResults = new Document();
+                exactly(1).of(mongoOperations).aggregate(with(isA(Aggregation.class)), with(equal("testCollection")), with(equal(TestClass.class)));
 
-                will(
-                        returnValue(new AggregationResults<>(results, rawResults)));
+                will(returnValue(new AggregationResults<>(results, rawResults)));
             }
         });
+    }
+
+    @Test
+    public void testGetEntityCountByFieldWithDate() {
+        assertNotNull(mongoUtils);
+        setupExpectations();
+
         DateTime now = DateTime.now();
-        AggregationResults<DBObject> foo = mongoUtils.getEntityCountByField("foo", now, now, TestClass.class);
+        AggregationResults<TestClass> foo = mongoUtils.getEntityCountByField("foo", now, now, TestClass.class);
         assertNotNull(foo);
 
         mockery.assertIsSatisfied();
     }
 
     @Test
-    public void testSaveOrUpdate() throws JsonProcessingException
-    {
+    public void testSaveOrUpdate() throws JsonProcessingException {
         TestClass testClass = new TestClass();
         mockery.checking(new Expectations() {
             {
@@ -117,12 +102,11 @@ public class MongoUtilsTest
         mockery.assertIsSatisfied();
     }
 
-    private class TestClass implements MongoEntity
-    {
+    private class TestClass implements MongoEntity {
         ObjectId objectId = ObjectId.get();
 
-        @Override public ObjectId getId()
-        {
+        @Override
+        public ObjectId getId() {
             return objectId;
         }
     }
