@@ -264,7 +264,7 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/pixelcat/mongo-base.git</connection>
+        <connection>scm:git:ssh://github.com/pixelcat/mongo-base.git</connection>
         <developerConnection>scm:git:https://github.com/pixelcat/mongo-base.git</developerConnection>
         <tag>mongo-base-1.8</tag>
     </scm>
