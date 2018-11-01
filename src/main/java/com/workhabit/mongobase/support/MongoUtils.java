@@ -26,10 +26,8 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 @Component
 public class MongoUtils
 {
-    @Autowired
     private MongoOperations mongoOperations;
 
-    @Autowired
     private ObjectMapper objectMapper;
 
     public <T> AggregationResults<T> getEntityCountByField(String fieldName, Class<T> entityType)
@@ -44,9 +42,19 @@ public class MongoUtils
         return mongoOperations.aggregate(aggregations, mongoOperations.getCollectionName(entityType), entityType);
     }
 
-    public MongoEntity saveOrUpdate(MongoEntity entity) throws JsonProcessingException
+    public MongoEntity saveOrUpdate(MongoEntity entity)
     {
         mongoOperations.save(entity, mongoOperations.getCollectionName(entity.getClass()));
         return entity;
+    }
+
+    @Autowired
+    public void setMongoOperations(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
+
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 }

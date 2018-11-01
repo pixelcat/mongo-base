@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -20,8 +21,8 @@ import java.util.Collection;
  * <p>
  * Cascade saves of entities in DBRef collections
  */
+@Component
 public class CascadingMongoEventListener extends AbstractMongoEventListener {
-    @Autowired
     private MongoOperations mongoOperations;
 
     @Override
@@ -62,6 +63,11 @@ public class CascadingMongoEventListener extends AbstractMongoEventListener {
         });
     }
 
+    @Autowired
+    public void setMongoOperations(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
+
     private static class DbRefFieldCallback implements ReflectionUtils.FieldCallback {
         private boolean idFound;
 
@@ -73,7 +79,7 @@ public class CascadingMongoEventListener extends AbstractMongoEventListener {
             }
         }
 
-        public boolean isIdFound() {
+        boolean isIdFound() {
             return idFound;
         }
     }

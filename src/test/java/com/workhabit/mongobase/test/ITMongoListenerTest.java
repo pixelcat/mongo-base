@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,7 +50,7 @@ public class ITMongoListenerTest {
 
         @Bean
         protected MongoOperations mongoOperations() throws Exception {
-            return new MongoTemplate(mongo().getObject(), databaseName());
+            return new MongoTemplate(Objects.requireNonNull(mongo().getObject()), databaseName());
         }
 
         @Bean
@@ -141,7 +142,7 @@ public class ITMongoListenerTest {
             return childEntities;
         }
 
-        public void setChildEntities(List<MongoListenerChildEntity> childEntities) {
+        void setChildEntities(List<MongoListenerChildEntity> childEntities) {
             this.childEntities = childEntities;
         }
     }
@@ -162,11 +163,11 @@ public class ITMongoListenerTest {
             this.id = id;
         }
 
-        public String getName() {
+        String getName() {
             return name;
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             this.name = name;
         }
     }

@@ -2,7 +2,6 @@ package com.workhabit.mongobase.test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.DBObject;
 import com.workhabit.mongobase.support.MongoEntity;
 import com.workhabit.mongobase.support.MongoUtils;
 import org.bson.Document;
@@ -18,7 +17,6 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertNotNull;
@@ -28,9 +26,9 @@ import static org.junit.Assert.assertNotNull;
  * Date: 12/28/14, 9:23 PM
  */
 public class MongoUtilsTest {
-    MongoUtils mongoUtils;
-    MongoOperations mongoOperations;
-    Mockery mockery;
+    private MongoUtils mongoUtils;
+    private MongoOperations mongoOperations;
+    private Mockery mockery;
 
     @Before
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
@@ -86,15 +84,15 @@ public class MongoUtilsTest {
     }
 
     @Test
-    public void testSaveOrUpdate() throws JsonProcessingException {
+    public void testSaveOrUpdate() {
         TestClass testClass = new TestClass();
         mockery.checking(new Expectations() {
             {
 
-                one(mongoOperations).getCollectionName(TestClass.class);
+                atLeast(1).of(mongoOperations).getCollectionName(TestClass.class);
                 will(returnValue("testCollection"));
 
-                one(mongoOperations).save(testClass, "testCollection");
+                atLeast(1).of(mongoOperations).save(testClass, "testCollection");
             }
         });
         mongoUtils.saveOrUpdate(testClass);
