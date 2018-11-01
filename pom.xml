@@ -4,7 +4,7 @@
 
     <groupId>com.workhabit</groupId>
     <artifactId>mongo-base</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.8</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -266,7 +266,7 @@
     <scm>
         <connection>scm:git:https://github.com/pixelcat/mongo-base.git</connection>
         <developerConnection>scm:git:https://github.com/pixelcat/mongo-base.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>mongo-base-1.8</tag>
     </scm>
     <distributionManagement>
         <repository>
