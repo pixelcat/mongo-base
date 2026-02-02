@@ -9,7 +9,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import java.io.IOException;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 5/5/14, 10:35 PM
  */
 public class JodaDateTimeJsonSerializer extends JsonSerializer<DateTime>
