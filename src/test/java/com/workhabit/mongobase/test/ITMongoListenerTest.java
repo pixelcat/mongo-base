@@ -31,7 +31,7 @@ import java.util.Objects;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 12/30/14, 4:27 PM
  */
 @RunWith(SpringJUnit4ClassRunner.class)
