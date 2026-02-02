@@ -5,7 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 4/23/14, 12:25 PM
  */
 public class JsonError
