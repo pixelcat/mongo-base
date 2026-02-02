@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 9/13/14, 10:55 PM
  */
 @JsonAutoDetect
