@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 import java.util.Date;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 11/7/14, 4:54 PM
  */
 public class JodaDateTimeTransformer implements org.bson.Transformer {
