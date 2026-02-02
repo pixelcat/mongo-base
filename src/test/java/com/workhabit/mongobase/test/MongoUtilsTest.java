@@ -22,7 +22,7 @@ import static org.hamcrest.core.Is.isA;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 12/28/14, 9:23 PM
  */
 public class MongoUtilsTest {
