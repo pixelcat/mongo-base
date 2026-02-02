@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.text.SimpleDateFormat;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 9/28/14, 11:21 PM
  */
 @Component("jacksonObjectMapper")
