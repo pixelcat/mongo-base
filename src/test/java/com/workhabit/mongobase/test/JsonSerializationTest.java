@@ -21,7 +21,7 @@ import java.util.Map;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Copyright 2014 - Aaron Stewart
+ * Copyright 2014 - Kenzi Stewart
  * Date: 12/28/14, 9:04 PM
  */
 
